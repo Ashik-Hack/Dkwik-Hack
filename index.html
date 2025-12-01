@@ -1,0 +1,2239 @@
+l<!DOCTYPE html>
+
+
+<html lang="bn">
+
+
+<head>
+
+
+<meta charset="UTF-8" />
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+<title> TASIM AI Smart Signal</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+
+html, body { height:100%; }
+
+
+body {
+
+
+  height:100vh;
+
+
+  font-family:'Outfit',sans-serif;
+
+
+  background:#000;
+
+
+}
+
+
+iframe {
+
+
+  position:fixed; top:0; left:0; width:100%; height:100%; border:none; z-index:0;
+
+
+}
+
+
+
+
+
+/* Password Overlay */
+
+
+.password-overlay {
+
+
+  position:absolute; top:0; left:0; width:100%; height:100%;
+
+
+  background:rgba(40, 0, 60, 0.85); /* Dark Purple + Black Mix */
+
+
+  border-radius:16px;
+
+
+  display:flex;
+
+
+  flex-direction:column;
+
+
+  align-items:center;
+
+
+  justify-content:center;
+
+
+  z-index:30;
+
+
+  backdrop-filter:blur(10px);
+
+
+  pointer-events: auto;
+
+
+}
+
+
+
+
+
+.password-form {
+
+
+  display:flex;
+
+
+  flex-direction:column;
+
+
+  align-items:center;
+
+
+  gap:15px;
+
+
+  padding:20px;
+
+
+  background:#0a0a0a; /* Dark Black / Charcoal Black */
+
+
+  border:2px solid #00ffc8; /* Neon Cyan / Mint Cyan */
+
+
+  border-radius:12px;
+
+
+  box-shadow:0 0 20px rgba(0,255,200,0.5);
+
+
+  width:80%;
+
+
+  max-width:300px;
+
+
+}
+
+
+
+
+
+.password-title {
+
+
+  font-size:18px;
+
+
+  font-weight:bold;
+
+
+  background: linear-gradient(90deg, #00eaff, #ff00ff); /* Sky Blue to Pink */
+
+
+  -webkit-background-clip: text;
+
+
+  background-clip: text;
+
+
+  color: transparent;
+
+
+  text-align:center;
+
+
+  margin-bottom:10px;
+
+
+  text-shadow:0 0 8px rgba(0,255,200,0.7);
+
+
+}
+
+
+
+
+
+.password-input {
+
+
+  width:100%;
+
+
+  padding:12px;
+
+
+  border:1px solid #00ffc8; /* Neon Cyan / Mint Cyan */
+
+
+  border-radius:8px;
+
+
+  background:#0a0a0a; /* Dark Black / Charcoal Black */
+
+
+  color:#fff;
+
+
+  font-size:16px;
+
+
+  text-align:center;
+
+
+  outline:none;
+
+
+  box-shadow:0 0 10px rgba(0,255,200,0.3);
+
+
+}
+
+
+
+
+
+.password-input:focus {
+
+
+  box-shadow:0 0 15px rgba(0,255,200,0.6);
+
+
+}
+
+
+
+
+
+.password-submit {
+
+
+  padding:10px 20px;
+
+
+  background:#00ffc8; /* Bright Cyan / Aqua Neon */
+
+
+  border:1px solid #00ffc8;
+
+
+  border-radius:8px;
+
+
+  color:#000;
+
+
+  font-weight:bold;
+
+
+  cursor:pointer;
+
+
+  transition:all 0.3s;
+
+
+  width:100%;
+
+
+  box-shadow:0 0 10px rgba(0,255,200,0.5); /* Soft Cyan Glow */
+
+
+}
+
+
+
+
+
+.password-submit:hover {
+
+
+  background:rgba(0,255,200,0.9);
+
+
+  box-shadow:0 0 15px rgba(0,255,200,0.7); /* Enhanced glow on hover */
+
+
+}
+
+
+
+
+
+.password-error {
+
+
+  color:#ff4c4c;
+
+
+  font-size:14px;
+
+
+  text-align:center;
+
+
+  min-height:20px;
+
+
+  margin-top:5px;
+
+
+  text-shadow:0 0 5px rgba(255,76,76,0.7);
+
+
+}
+
+
+
+
+
+.lock-status {
+
+
+  position:absolute;
+
+
+  top:10px;
+
+
+  right:10px;
+
+
+  color:#ff4c4c;
+
+
+  font-size:12px;
+
+
+  cursor:pointer;
+
+
+  z-index:35;
+
+
+  pointer-events: auto;
+
+
+}
+
+
+
+
+
+.lock-status.unlocked {
+
+
+  color:#00ff88;
+
+
+}
+
+
+
+
+
+/* Main Prediction Box - Smaller Size */
+
+
+.prediction-box {
+
+
+  position:absolute; top:20px; right:15px;
+
+
+  width:220px;
+
+
+  height:auto;
+
+
+  background:rgba(0,0,0,0.82);
+
+
+  border:2px solid #00ffc8; /* Neon Cyan / Aqua Blue */
+
+
+  border-radius:16px;
+
+
+  box-shadow:0 0 20px rgba(0,255,200,0.45), inset 0 0 10px rgba(0,255,200,0.1);
+
+
+  backdrop-filter:blur(6px);
+
+
+  color:#fff;
+
+
+  z-index:20;
+
+
+  display:flex;
+
+
+  flex-direction:column;
+
+
+  padding:12px;
+
+
+  cursor:grab;
+
+
+  overflow:hidden;
+
+
+  transition:all 0.3s cubic-bezier(.2,.9,.2,1);
+
+
+}
+
+
+
+
+
+.prediction-box:hover {
+
+
+  box-shadow:0 0 25px rgba(0,255,200,0.7), inset 0 0 15px rgba(0,255,200,0.15);
+
+
+}
+
+
+
+
+
+/* Header Section */
+
+
+.prediction-header {
+
+
+  display: flex;
+
+
+  align-items: center;
+
+
+  justify-content: center;
+
+
+  margin-bottom: 8px;
+
+
+  padding-bottom: 6px;
+
+
+  border-bottom: 1px solid rgba(0,255,200,0.3);
+
+
+}
+
+
+
+
+
+.prediction-title {
+
+
+  font-size:18px;
+
+
+  font-weight:bold; 
+
+
+  background: linear-gradient(90deg, #00eaff, #ff00ff); /* Sky Blue to Pink */
+
+
+  -webkit-background-clip: text;
+
+
+  background-clip: text;
+
+
+  color: transparent;
+
+
+  text-shadow:0 0 8px rgba(0,255,200,0.7); 
+
+
+  margin-right: 6px;
+
+
+}
+
+
+
+
+
+.prediction-subtitle {
+
+
+  font-size: 12px;
+
+
+  color: #ff00ff;
+
+
+  font-weight: bold;
+
+
+  text-shadow: 0 0 6px rgba(255,0,255,0.7);
+
+
+}
+
+
+
+
+
+/* Countdown Section */
+
+
+.countdown-section {
+
+
+  display: flex;
+
+
+  align-items: center;
+
+
+  justify-content: space-between;
+
+
+  margin-bottom: 10px;
+
+
+  padding: 6px 10px;
+
+
+  background: rgba(0,255,200,0.1);
+
+
+  border-radius: 8px;
+
+
+  border: 1px solid rgba(0,255,200,0.2);
+
+
+}
+
+
+
+
+
+.countdown-label {
+
+
+  font-size:12px;
+
+
+  color:#fff; 
+
+
+  font-weight:bold;
+
+
+}
+
+
+
+
+
+.countdown { 
+
+
+  font-size:14px;
+
+
+  font-weight:bold; 
+
+
+  color:#FFD700; 
+
+
+  text-shadow:0 0 6px rgba(255,215,0,0.6); 
+
+
+}
+
+
+
+
+
+/* Prediction Display */
+
+
+.prediction-display {
+
+
+  display: flex;
+
+
+  flex-direction: column;
+
+
+  align-items: center;
+
+
+  margin: 8px 0;
+
+
+  padding: 12px;
+
+
+  background: rgba(0,0,0,0.6);
+
+
+  border-radius: 10px;
+
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+
+}
+
+
+
+
+
+.prediction-label {
+
+
+  font-size: 12px;
+
+
+  color: #aaa;
+
+
+  margin-bottom: 6px;
+
+
+}
+
+
+
+
+
+.prediction { 
+
+
+  font-size:22px;
+
+
+  font-weight:700; 
+
+
+  text-align:center; 
+
+
+  min-height:30px;
+
+
+  display: flex;
+
+
+  align-items: center;
+
+
+  justify-content: center;
+
+
+  width: 100%;
+
+
+  border-radius: 6px;
+
+
+  padding: 6px;
+
+
+  margin-bottom: 8px;
+
+
+}
+
+
+
+
+
+.prediction.red { 
+
+
+  color:#ff4c4c; 
+
+
+  background: rgba(255,76,76,0.1);
+
+
+  border: 1px solid rgba(255,76,76,0.3);
+
+
+  text-shadow:0 0 12px #ff4c4c; 
+
+
+  animation:pulseRed 1.5s infinite alternate; 
+
+
+}
+
+
+
+
+
+.prediction.green { 
+
+
+  color:#00ff88; 
+
+
+  background: rgba(0,255,136,0.1);
+
+
+  border: 1px solid rgba(0,255,136,0.3);
+
+
+  text-shadow:0 0 12px #00ff88; 
+
+
+  animation:pulseGreen 1.5s infinite alternate; 
+
+
+}
+
+
+
+
+
+.prediction.big { 
+
+
+  color:#00ff88; 
+
+
+  background: rgba(0,255,136,0.1);
+
+
+  border: 1px solid rgba(0,255,136,0.3);
+
+
+  text-shadow:0 0 12px #00ff88; 
+
+
+  animation:pulseGreen 1.5s infinite alternate; 
+
+
+}
+
+
+
+
+
+.prediction.small { 
+
+
+  color:#ff4c4c; 
+
+
+  background: rgba(255,76,76,0.1);
+
+
+  border: 1px solid rgba(255,76,76,0.3);
+
+
+  text-shadow:0 0 12px #ff4c4c; 
+
+
+  animation:pulseRed 1.5s infinite alternate; 
+
+
+}
+
+
+
+
+
+.prediction.hold { 
+
+
+  color:#FFD700; 
+
+
+  background: rgba(255,215,0,0.1);
+
+
+  border: 1px solid rgba(255,215,0,0.3);
+
+
+  text-shadow:0 0 8px #FFD700; 
+
+
+  animation:blink 1s infinite; 
+
+
+}
+
+
+
+
+
+/* Numbers Display */
+
+
+.numbers-display {
+
+
+  display: flex;
+
+
+  justify-content: center;
+
+
+  gap: 12px;
+
+
+  margin-top: 6px;
+
+
+}
+
+
+
+
+
+.number {
+
+
+  width: 32px;
+
+
+  height: 32px;
+
+
+  display: flex;
+
+
+  align-items: center;
+
+
+  justify-content: center;
+
+
+  border-radius: 50%;
+
+
+  font-weight: bold;
+
+
+  font-size: 14px;
+
+
+  background: rgba(0,255,200,0.15);
+
+
+  border: 1px solid rgba(0,255,200,0.4);
+
+
+  box-shadow: 0 0 8px rgba(0,255,200,0.3);
+
+
+}
+
+
+
+
+
+/* Stats Section */
+
+
+.stats-section {
+
+
+  display: flex;
+
+
+  justify-content: space-between;
+
+
+  margin-top: 12px;
+
+
+  padding-top: 8px;
+
+
+  border-top: 1px solid rgba(0,255,200,0.2);
+
+
+}
+
+
+
+
+
+.stat-item {
+
+
+  display: flex;
+
+
+  flex-direction: column;
+
+
+  align-items: center;
+
+
+}
+
+
+
+
+
+.stat-value {
+
+
+  font-size: 14px;
+
+
+  font-weight: bold;
+
+
+  color: #00ffc8;
+
+
+}
+
+
+
+
+
+.stat-label {
+
+
+  font-size: 10px;
+
+
+  color: #aaa;
+
+
+  margin-top: 2px;
+
+
+}
+
+
+
+
+
+/* Telegram Button */
+
+
+.telegram-button {
+
+
+  display: flex;
+
+
+  align-items: center;
+
+
+  justify-content: center;
+
+
+  gap: 8px;
+
+
+  margin-top: 12px;
+
+
+  padding: 10px 15px;
+
+
+  background: linear-gradient(135deg, #0088cc, #00aced);
+
+
+  border: none;
+
+
+  border-radius: 8px;
+
+
+  color: white;
+
+
+  font-weight: bold;
+
+
+  font-size: 14px;
+
+
+  cursor: pointer;
+
+
+  transition: all 0.3s;
+
+
+  text-decoration: none;
+
+
+  box-shadow: 0 0 10px rgba(0, 136, 204, 0.5);
+
+
+}
+
+
+
+
+
+.telegram-button:hover {
+
+
+  background: linear-gradient(135deg, #00aced, #0088cc);
+
+
+  box-shadow: 0 0 15px rgba(0, 136, 204, 0.8);
+
+
+  transform: translateY(-2px);
+
+
+}
+
+
+
+
+
+.telegram-button:active {
+
+
+  transform: translateY(0);
+
+
+}
+
+
+
+
+
+.telegram-icon {
+
+
+  font-size: 16px;
+
+
+}
+
+
+
+
+
+/* Drag Indicator */
+
+
+.drag-indicator {
+
+
+  position:absolute;
+
+
+  top:0;
+
+
+  left:0;
+
+
+  width:100%;
+
+
+  height:100%;
+
+
+  border-radius:16px;
+
+
+  pointer-events:none;
+
+
+  opacity:0;
+
+
+  transition:opacity 0.3s;
+
+
+  background:rgba(0,255,200,0.1);
+
+
+}
+
+
+
+
+
+.prediction-box:hover .drag-indicator {
+
+
+  opacity:1;
+
+
+}
+
+
+
+
+
+/* Animations */
+
+
+@keyframes pulseBlue { 
+
+
+  from {box-shadow: inset 0 0 4px rgba(255,76,76,0.3), 0 0 4px #ff4c4c;} 
+
+
+  to {box-shadow: inset 0 0 8px rgba(255,76,76,0.5), 0 0 15px #ff4c4c;} 
+
+
+}
+
+
+
+
+
+@keyframes pulseGreen { 
+
+
+  from {box-shadow: inset 0 0 4px rgba(0,255,136,0.3), 0 0 4px #00ff88;} 
+
+
+  to {box-shadow: inset 0 0 8px rgba(0,255,136,0.5), 0 0 15px #00ff88;} 
+
+
+}
+
+
+
+
+
+@keyframes blink { 
+
+
+  0%,100%{opacity:1;}
+
+
+  50%{opacity:0.6;} 
+
+
+}
+
+
+
+
+
+/* Logo styling */
+
+
+.nazmul-logo {
+
+
+  position: fixed;
+
+
+  top: 20px;
+
+
+  left: 20px;
+
+
+  font-size: 24px;
+
+
+  color: #00ffc8;
+
+
+  font-weight: bold;
+
+
+  text-shadow: 0 0 10px rgba(0,255,200,0.7);
+
+
+  z-index: 10;
+
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+
+
+
+  <iframe src="https://dkwin9.com/#/register?invitationCode=365181323982"></iframe>
+
+
+
+
+
+  <div id="predictionBox" class="prediction-box">
+
+
+    <!-- Password Overlay -->
+
+
+    <div id="passwordOverlay" class="password-overlay">
+
+
+      <div class="password-form">
+
+
+        <div class="password-title"> ꫝ𝚂𝙷𝙸ƙ </div>
+
+
+        <input type="password" id="passwordInput" class="password-input" placeholder="Enter Password" autocomplete="off">
+
+
+        <button id="passwordSubmit" class="password-submit">Unlock</button>
+
+
+        <div id="passwordError" class="password-error"></div>
+
+
+      </div>
+
+
+    </div>
+
+
+    
+
+
+    <!-- Lock Status Indicator -->
+
+
+    <div id="lockStatus" class="lock-status" title="Click to lock">🔒</div>
+
+
+    
+
+
+    <div class="drag-indicator"></div>
+
+
+    
+
+
+    <!-- Countdown -->
+
+
+    <div class="countdown-section">
+
+
+      <div class="countdown-label">Next Period:</div>
+
+
+      <div id="countdown" class="countdown">--s</div>
+
+
+    </div>
+
+
+    
+
+
+    <!-- Prediction Display -->
+
+
+    <div class="prediction-display">
+
+
+      <div class="prediction-label">ꫝ𝚂𝙷𝙸ƙ</div>
+
+
+      <div id="prediction" class="prediction"><div class="loading">Analyzing...</div></div>
+
+
+      <div class="numbers-display">
+
+
+        <div id="number1" class="number">-</div>
+
+
+        <div id="number2" class="number">-</div>
+
+
+      </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- Telegram Button -->
+
+
+    <a href="https://t.me/tx_taiger" target="_blank" class="telegram-button">
+
+
+      <span class="telegram-icon"></span>
+
+
+      TG : @Md_ashik_islam
+
+
+    </a>
+
+
+  </div>
+
+
+
+
+
+<script>
+
+
+// Password Protection System
+
+
+const CORRECT_PASSWORD = "ashikmods";
+
+
+let isUnlocked = false;
+
+
+
+
+
+// Initialize password protection
+
+
+function initializePasswordProtection() {
+
+
+  const passwordOverlay = document.getElementById('passwordOverlay');
+
+
+  const passwordInput = document.getElementById('passwordInput');
+
+
+  const passwordSubmit = document.getElementById('passwordSubmit');
+
+
+  const passwordError = document.getElementById('passwordError');
+
+
+  const lockStatus = document.getElementById('lockStatus');
+
+
+  
+
+
+  // Check if already unlocked (for page refresh)
+
+
+  if (sessionStorage.getItem('predictionBoxUnlocked') === 'true') {
+
+
+    unlockPredictionBox();
+
+
+  }
+
+
+  
+
+
+  // Submit password on button click
+
+
+  passwordSubmit.addEventListener('click', checkPassword);
+
+
+  
+
+
+  // Submit password on Enter key
+
+
+  passwordInput.addEventListener('keypress', function(e) {
+
+
+    if (e.key === 'Enter') {
+
+
+      checkPassword();
+
+
+    }
+
+
+  });
+
+
+  
+
+
+  // Lock box when lock status is clicked
+
+
+  lockStatus.addEventListener('click', function() {
+
+
+    if (isUnlocked) {
+
+
+      lockPredictionBox();
+
+
+    }
+
+
+  });
+
+
+  
+
+
+  function checkPassword() {
+
+
+    const enteredPassword = passwordInput.value.trim();
+
+
+    
+
+
+    if (enteredPassword === CORRECT_PASSWORD) {
+
+
+      unlockPredictionBox();
+
+
+      passwordError.textContent = '';
+
+
+    } else {
+
+
+      passwordError.textContent = 'Incorrect password!';
+
+
+      passwordInput.value = '';
+
+
+      passwordInput.focus();
+
+
+      
+
+
+      // Shake animation for wrong password
+
+
+      passwordOverlay.style.animation = 'shake 0.5s';
+
+
+      setTimeout(() => {
+
+
+        passwordOverlay.style.animation = '';
+
+
+      }, 500);
+
+
+    }
+
+
+  }
+
+
+  
+
+
+  function unlockPredictionBox() {
+
+
+    isUnlocked = true;
+
+
+    passwordOverlay.style.display = 'none';
+
+
+    lockStatus.textContent = '🔓';
+
+
+    lockStatus.classList.add('unlocked');
+
+
+    lockStatus.title = 'Click to lock';
+
+
+    
+
+
+    // Store unlocked state in session storage
+
+
+    sessionStorage.setItem('predictionBoxUnlocked', 'true');
+
+
+    
+
+
+    // Initialize the prediction system
+
+
+    initializePredictionSystem();
+
+
+  }
+
+
+  
+
+
+  function lockPredictionBox() {
+
+
+    isUnlocked = false;
+
+
+    passwordOverlay.style.display = 'flex';
+
+
+    lockStatus.textContent = '🔒';
+
+
+    lockStatus.classList.remove('unlocked');
+
+
+    lockStatus.title = 'Click to unlock';
+
+
+    passwordInput.value = '';
+
+
+    passwordInput.focus();
+
+
+    
+
+
+    // Remove unlocked state from session storage
+
+
+    sessionStorage.removeItem('predictionBoxUnlocked');
+
+
+  }
+
+
+}
+
+
+
+
+
+// Main App Initialization
+
+
+function initializePredictionSystem() {
+
+
+  // --- Improved Drag & Drop ---
+
+
+  const box = document.getElementById('predictionBox');
+
+
+
+
+
+  let dragging = false;
+
+
+  let startX, startY, startLeft, startTop;
+
+
+  let pointerId;
+
+
+  let moved = false;
+
+
+  const MOVE_THRESHOLD = 3;
+
+
+
+
+
+  // Ensure box has absolute positioning
+
+
+  function ensureAbsPos() {
+
+
+    const r = box.getBoundingClientRect();
+
+
+    if (!box.style.left) box.style.left = r.left + 'px';
+
+
+    if (!box.style.top) box.style.top = r.top + 'px';
+
+
+    box.style.right = 'auto';
+
+
+  }
+
+
+  ensureAbsPos();
+
+
+
+
+
+  // Pointer events for better touch and mouse support
+
+
+  box.addEventListener('pointerdown', e => {
+
+
+    // Don't start dragging if clicking on password form elements or telegram button
+
+
+    if (e.target.closest('.password-form') || e.target.closest('.telegram-button')) return;
+
+
+    
+
+
+    pointerId = e.pointerId;
+
+
+    box.setPointerCapture(pointerId);
+
+
+    dragging = true;
+
+
+    moved = false;
+
+
+    startX = e.clientX;
+
+
+    startY = e.clientY;
+
+
+    const r = box.getBoundingClientRect();
+
+
+    startLeft = r.left;
+
+
+    startTop = r.top;
+
+
+    box.style.transition = 'none';
+
+
+    box.style.cursor = 'grabbing';
+
+
+    
+
+
+    // Visual feedback for dragging
+
+
+    box.style.transform = 'scale(0.98)';
+
+
+    box.style.boxShadow = '0 0 25px rgba(0,255,200,0.7), inset 0 0 15px rgba(0,255,200,0.2)';
+
+
+  });
+
+
+
+
+
+  box.addEventListener('pointermove', e => {
+
+
+    if (!dragging) return;
+
+
+    
+
+
+    const dx = e.clientX - startX;
+
+
+    const dy = e.clientY - startY;
+
+
+    
+
+
+    if (Math.hypot(dx, dy) > MOVE_THRESHOLD) moved = true;
+
+
+    
+
+
+    // Update position
+
+
+    box.style.left = startLeft + dx + 'px';
+
+
+    box.style.top = startTop + dy + 'px';
+
+
+  });
+
+
+
+
+
+  box.addEventListener('pointerup', e => {
+
+
+    if (pointerId) box.releasePointerCapture(pointerId);
+
+
+    dragging = false;
+
+
+    
+
+
+    // Reset visual effects
+
+
+    box.style.transition = 'all 0.3s cubic-bezier(.2,.9,.2,1)';
+
+
+    box.style.cursor = 'grab';
+
+
+    box.style.transform = 'scale(1)';
+
+
+    box.style.boxShadow = '0 0 20px rgba(0,255,200,0.45), inset 0 0 10px rgba(0,255,200,0.1)';
+
+
+  });
+
+
+
+
+
+  // Touch events for better mobile support
+
+
+  box.addEventListener('touchstart', e => {
+
+
+    e.preventDefault();
+
+
+  });
+
+
+
+
+
+  // --- Random Prediction System with Updated Number Logic ---
+
+
+  const HISTORY_API = 'https://draw.ar-lottery01.com/WinGo/WinGo_30S/GetHistoryIssuePage.json';
+
+
+  let lastTopIssue = null;
+
+
+  let stats = {
+
+
+    totalPredictions: 0,
+
+
+    correctPredictions: 0,
+
+
+    currentStreak: 0,
+
+
+    maxStreak: 0
+
+
+  };
+
+
+
+
+
+  function generateRandomPrediction() {
+
+
+    // Generate random Big/Small prediction
+
+
+    const sizeOptions = ['Big', 'Small'];
+
+
+    const randomSize = sizeOptions[Math.floor(Math.random() * sizeOptions.length)];
+
+
+    
+
+
+    // Generate numbers based on prediction type
+
+
+    let number1, number2;
+
+
+    
+
+
+    if (randomSize === 'Big') {
+
+
+      // For Big: two random numbers from 5 to 9
+
+
+      number1 = Math.floor(Math.random() * 5) + 5;
+
+
+      number2 = Math.floor(Math.random() * 5) + 5;
+
+
+    } else {
+
+
+      // For Small: two random numbers from 0 to 4
+
+
+      number1 = Math.floor(Math.random() * 5);
+
+
+      number2 = Math.floor(Math.random() * 5);
+
+
+    }
+
+
+    
+
+
+    return {
+
+
+      size: randomSize,
+
+
+      numbers: [number1, number2]
+
+
+    };
+
+
+  }
+
+
+
+
+
+  function updateStats(isCorrect) {
+
+
+    stats.totalPredictions++;
+
+
+    if (isCorrect) {
+
+
+      stats.correctPredictions++;
+
+
+      stats.currentStreak++;
+
+
+      if (stats.currentStreak > stats.maxStreak) {
+
+
+        stats.maxStreak = stats.currentStreak;
+
+
+      }
+
+
+    } else {
+
+
+      stats.currentStreak = 0;
+
+
+    }
+
+
+    
+
+
+    // Update UI
+
+
+    document.getElementById('accuracy').textContent = 
+
+
+      stats.totalPredictions > 0 ? 
+
+
+      Math.round((stats.correctPredictions / stats.totalPredictions) * 100) + '%' : '--%';
+
+
+    
+
+
+    document.getElementById('winRate').textContent = 
+
+
+      stats.totalPredictions > 0 ? 
+
+
+      Math.round((stats.correctPredictions / stats.totalPredictions) * 100) + '%' : '--%';
+
+
+    
+
+
+    document.getElementById('streak').textContent = stats.currentStreak;
+
+
+  }
+
+
+
+
+
+  async function loadSignal() {
+
+
+    try {
+
+
+      const res = await fetch(HISTORY_API + '?ts=' + Date.now(), { cache: 'no-store' });
+
+
+      const data = await res.json();
+
+
+      if (!data || !data.data || !Array.isArray(data.data.list)) return;
+
+
+      const list = data.data.list.slice(0, 15);
+
+
+      
+
+
+      // Check if new market number has arrived
+
+
+      if (lastTopIssue !== list[0].issueNumber) {
+
+
+        lastTopIssue = list[0].issueNumber;
+
+
+        showLoading();
+
+
+        setTimeout(() => {
+
+
+          const prediction = generateRandomPrediction();
+
+
+          showPrediction(prediction);
+
+
+          
+
+
+          // Randomly determine if prediction was correct for demo purposes
+
+
+          const isCorrect = Math.random() > 0.3;
+
+
+          updateStats(isCorrect);
+
+
+        }, 900);
+
+
+      }
+
+
+    } catch (err) { 
+
+
+      console.error(err);
+
+
+      // Fallback to random prediction if API fails
+
+
+      if (!lastTopIssue) {
+
+
+        showLoading();
+
+
+        setTimeout(() => {
+
+
+          const prediction = generateRandomPrediction();
+
+
+          showPrediction(prediction);
+
+
+          lastTopIssue = "dummy-" + Date.now();
+
+
+          
+
+
+          // Update stats with random result
+
+
+          const isCorrect = Math.random() > 0.3;
+
+
+          updateStats(isCorrect);
+
+
+        }, 900);
+
+
+      }
+
+
+    }
+
+
+  }
+
+
+
+
+
+  function showLoading() { 
+
+
+    document.getElementById('prediction').innerHTML = `<div class="loading">Analyzing...</div>`;
+
+
+    document.getElementById('number1').textContent = '-';
+
+
+    document.getElementById('number2').textContent = '-';
+
+
+  }
+
+
+
+
+
+  function showPrediction(prediction) {
+
+
+    const el = document.getElementById('prediction');
+
+
+    const number1El = document.getElementById('number1');
+
+
+    const number2El = document.getElementById('number2');
+
+
+    
+
+
+    // Display Big/Small prediction
+
+
+    let text = prediction.size;
+
+
+    let cls = prediction.size.toLowerCase();
+
+
+    el.innerHTML = `<div class="prediction ${cls}">${text}</div>`;
+
+
+    
+
+
+    // Display random numbers
+
+
+    number1El.textContent = prediction.numbers[0];
+
+
+    number2El.textContent = prediction.numbers[1];
+
+
+  }
+
+
+
+
+
+  // Countdown
+
+
+  function updateCountdown() {
+
+
+    const now = new Date();
+
+
+    const sec = now.getSeconds();
+
+
+    const remain = 30 - (sec % 30);
+
+
+    const c = document.getElementById('countdown');
+
+
+    if (c) { 
+
+
+      c.innerText = `${remain}s`; 
+
+
+      c.style.color = remain <= 5 ? '#ff4c4c' : '#FFD700'; 
+
+
+    }
+
+
+  }
+
+
+
+
+
+  // Initial load
+
+
+  loadSignal();
+
+
+  updateCountdown();
+
+
+  setInterval(() => { 
+
+
+    loadSignal(); 
+
+
+    updateCountdown(); 
+
+
+  }, 1000);
+
+
+}
+
+
+
+
+
+// Add shake animation for wrong password
+
+
+const style = document.createElement('style');
+
+
+style.textContent = `
+
+
+  @keyframes shake {
+
+
+    0%, 100% { transform: translateX(0); }
+
+
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+
+
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+
+  }
+
+
+`;
+
+
+document.head.appendChild(style);
+
+
+
+
+
+// Initialize the app
+
+
+initializePasswordProtection();
+
+
+</script>
+
+
+</body>
+
+
+</html>
